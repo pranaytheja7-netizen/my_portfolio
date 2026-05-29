@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pranay Theja — Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0A0A0F;color:#E8E6E0;font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none}
+
+.cursor{position:fixed;width:10px;height:10px;background:#C8FF00;border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.1s;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(200,255,0,0.4);border-radius:50%;pointer-events:none;z-index:9998;transition:transform 0.12s,width 0.2s,height 0.2s}
+
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:#0A0A0F}
+::-webkit-scrollbar-thumb{background:#C8FF00;border-radius:2px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:difference}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:0.05em;color:#fff}
+.nav-links{display:flex;gap:2.5rem}
+.nav-links a{color:#fff;text-decoration:none;font-size:0.8rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;opacity:0.7;transition:opacity 0.2s}
+.nav-links a:hover{opacity:1}
+
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 3rem 3rem;position:relative;overflow:hidden}
+
+.hero-noise{position:absolute;inset:0;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:200px 200px;pointer-events:none}
+
+.hero-tag{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:#C8FF00;margin-bottom:1rem;opacity:0;animation:fadeUp 0.8s 0.2s forwards}
+
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(4rem,11vw,10rem);line-height:0.9;letter-spacing:-0.03em;color:#fff;opacity:0;animation:fadeUp 0.9s 0.35s forwards}
+.hero-name span{color:#C8FF00}
+
+.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;margin-top:3rem;opacity:0;animation:fadeUp 0.8s 0.6s forwards}
+.hero-desc{max-width:300px;font-size:0.85rem;line-height:1.7;color:rgba(232,230,224,0.55);font-weight:300}
+.hero-cta{display:flex;align-items:center;gap:1rem}
+.btn-primary{background:#C8FF00;color:#0A0A0F;padding:0.9rem 2rem;border-radius:2rem;font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:transform 0.2s,background 0.2s}
+.btn-primary:hover{transform:scale(1.04);background:#d4ff33}
+.scroll-hint{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(232,230,224,0.35);writing-mode:vertical-rl;position:absolute;right:3rem;bottom:50%;transform:translateY(50%);opacity:0;animation:fadeIn 1s 1.2s forwards}
+
+.status-dot{width:8px;height:8px;background:#C8FF00;border-radius:50%;display:inline-block;margin-right:0.5rem;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:0.35}}
+
+.grid-line{position:absolute;inset:0;pointer-events:none;opacity:0.04}
+
+#about{padding:8rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.about-label{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#C8FF00;margin-bottom:1.5rem}
+.about-heading{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:800;line-height:1.05;letter-spacing:-0.02em;margin-bottom:2rem}
+.about-text{font-size:0.9rem;line-height:1.8;color:rgba(232,230,224,0.6);font-weight:300;margin-bottom:1.5rem}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem}
+.stat-box{border:1px solid rgba(200,255,0,0.15);padding:1.5rem;border-radius:12px}
+.stat-num{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:#C8FF00;line-height:1}
+.stat-label{font-size:0.75rem;color:rgba(232,230,224,0.45);margin-top:0.4rem;letter-spacing:0.08em;text-transform:uppercase}
+
+.skills-grid{display:flex;flex-wrap:wrap;gap:0.6rem}
+.skill-pill{padding:0.5rem 1.1rem;border:1px solid rgba(232,230,224,0.12);border-radius:2rem;font-size:0.78rem;color:rgba(232,230,224,0.7);font-weight:400;transition:border-color 0.2s,color 0.2s}
+.skill-pill:hover{border-color:#C8FF00;color:#C8FF00}
+
+#projects{padding:6rem 3rem}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-0.02em}
+.section-count{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(232,230,224,0.35)}
+
+.projects-list{display:flex;flex-direction:column;gap:1px;border-top:1px solid rgba(232,230,224,0.08)}
+.project-row{display:grid;grid-template-columns:80px 1fr auto auto;gap:2rem;align-items:center;padding:2rem 0;border-bottom:1px solid rgba(232,230,224,0.08);cursor:pointer;transition:background 0.2s;position:relative;overflow:hidden}
+.project-row::before{content:'';position:absolute;left:-100%;top:0;bottom:0;width:100%;background:rgba(200,255,0,0.03);transition:left 0.4s ease}
+.project-row:hover::before{left:0}
+.project-row:hover .proj-name{color:#C8FF00}
+.proj-num{font-family:'Syne',sans-serif;font-size:0.75rem;color:rgba(232,230,224,0.25);letter-spacing:0.1em}
+.proj-info{min-width:0}
+.proj-name{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;transition:color 0.2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-desc{font-size:0.78rem;color:rgba(232,230,224,0.45);margin-top:0.3rem;line-height:1.5;max-width:500px}
+.proj-tags{display:flex;gap:0.5rem;flex-wrap:wrap}
+.proj-tag{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(232,230,224,0.35);border:1px solid rgba(232,230,224,0.1);padding:0.25rem 0.6rem;border-radius:2rem}
+.proj-link{color:rgba(232,230,224,0.3);font-size:1.2rem;transition:color 0.2s;text-decoration:none;padding:0.5rem}
+.proj-link:hover{color:#C8FF00}
+
+#education{padding:6rem 3rem;background:#0E0E14;border-radius:32px;margin:0 1.5rem}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}
+.edu-card{border:1px solid rgba(232,230,224,0.08);border-radius:16px;padding:2rem;position:relative;overflow:hidden}
+.edu-card::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle,rgba(200,255,0,0.08),transparent);border-radius:50%;transform:translate(20px,-20px)}
+.edu-degree{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.5rem}
+.edu-school{font-size:0.82rem;color:rgba(232,230,224,0.5);margin-bottom:1rem}
+.edu-gpa{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(200,255,0,0.08);color:#C8FF00;padding:0.3rem 0.8rem;border-radius:2rem;font-size:0.75rem;font-weight:600}
+
+#certs{padding:6rem 3rem}
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+.cert-card{border:1px solid rgba(232,230,224,0.08);border-radius:16px;padding:1.8rem;transition:border-color 0.2s,transform 0.2s}
+.cert-card:hover{border-color:rgba(200,255,0,0.3);transform:translateY(-3px)}
+.cert-icon{width:40px;height:40px;background:rgba(200,255,0,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.2rem}
+.cert-title{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:0.5rem}
+.cert-desc{font-size:0.78rem;color:rgba(232,230,224,0.45);line-height:1.6}
+
+#contact{padding:8rem 3rem;text-align:center}
+.contact-heading{font-family:'Syne',sans-serif;font-size:clamp(3rem,8vw,7rem);font-weight:800;line-height:0.95;letter-spacing:-0.03em;margin-bottom:2.5rem}
+.contact-heading em{color:#C8FF00;font-style:italic;font-family:'DM Sans',sans-serif;font-weight:300}
+.contact-links{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-top:3rem}
+.contact-link{display:flex;align-items:center;gap:0.5rem;color:rgba(232,230,224,0.5);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(232,230,224,0.12);padding:0.8rem 1.5rem;border-radius:2rem;transition:color 0.2s,border-color 0.2s}
+.contact-link:hover{color:#C8FF00;border-color:#C8FF00}
+
+footer{padding:2rem 3rem;border-top:1px solid rgba(232,230,224,0.06);display:flex;justify-content:space-between;align-items:center}
+.footer-text{font-size:0.75rem;color:rgba(232,230,224,0.25);letter-spacing:0.05em}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curRing"></div>
+
+<nav>
+  <div class="nav-logo">PT</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-noise"></div>
+  <svg class="grid-line" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="g" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M 80 0 L 0 0 0 80" fill="none" stroke="white" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>
+
+  <div class="hero-tag"><span class="status-dot"></span>Available for opportunities</div>
+  <h1 class="hero-name">Pranay<br>Theja<span>.</span></h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">CS Engineering student at CVR College, Hyderabad. Building intelligent systems at the intersection of AI and software development.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Work</a>
+    </div>
+  </div>
+  <span class="scroll-hint">Scroll to explore</span>
+</section>
+
+<section id="about">
+  <div class="reveal">
+    <div class="about-label">Who I am</div>
+    <h2 class="about-heading">CS Student &<br>Developer</h2>
+    <p class="about-text">B.Tech Computer Science Engineering student at CVR College of Engineering, Hyderabad, maintaining a CGPA of 8.22/10. I build real-world applications that leverage AI, computer vision, and modern web technologies.</p>
+    <p class="about-text">Fluent in English and Telugu, I enjoy tackling accessibility challenges and making technology work for everyone — like bilingual voice interfaces for bus reservations.</p>
+    <div class="about-stats">
+      <div class="stat-box"><div class="stat-num">8.22</div><div class="stat-label">CGPA / 10</div></div>
+      <div class="stat-box"><div class="stat-num">3+</div><div class="stat-label">Projects Built</div></div>
+      <div class="stat-box"><div class="stat-num">2028</div><div class="stat-label">Graduation</div></div>
+      <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">Certifications</div></div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="about-label" style="margin-bottom:1.2rem">Tech Stack</div>
+    <div class="skills-grid">
+      <span class="skill-pill">Java</span>
+      <span class="skill-pill">Python</span>
+      <span class="skill-pill">JavaScript</span>
+      <span class="skill-pill">HTML / CSS</span>
+      <span class="skill-pill">React</span>
+      <span class="skill-pill">FastAPI</span>
+      <span class="skill-pill">Node.js</span>
+      <span class="skill-pill">Express.js</span>
+      <span class="skill-pill">Kotlin</span>
+      <span class="skill-pill">Jetpack Compose</span>
+      <span class="skill-pill">OpenCV</span>
+      <span class="skill-pill">MediaPipe</span>
+      <span class="skill-pill">Room DB</span>
+      <span class="skill-pill">MVVM</span>
+      <span class="skill-pill">LLM APIs</span>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-header reveal">
+    <h2 class="section-title">Selected<br>Projects</h2>
+    <span class="section-count">03 Works</span>
+  </div>
+  <div class="projects-list">
+    <div class="project-row reveal">
+      <span class="proj-num">001</span>
+      <div class="proj-info">
+        <div class="proj-name">Visual Try-On</div>
+        <div class="proj-desc">AI-powered virtual fashion try-on using computer vision and pose estimation. Upload a photo and garment — see yourself wearing it.</div>
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">React</span>
+        <span class="proj-tag">FastAPI</span>
+        <span class="proj-tag">OpenCV</span>
+        <span class="proj-tag">MediaPipe</span>
+      </div>
+      <a href="https://github.com/Pranay7605/Visual-try-on" target="_blank" class="proj-link" title="View on GitHub">↗</a>
+    </div>
+    <div class="project-row reveal">
+      <span class="proj-num">002</span>
+      <div class="proj-info">
+        <div class="proj-name">QAgenie AI</div>
+        <div class="proj-desc">Intelligent software testing platform. Auto-generates functional, edge-case, security, and negative test cases from requirements using Generative AI.</div>
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">React.js</span>
+        <span class="proj-tag">Node.js</span>
+        <span class="proj-tag">Express</span>
+        <span class="proj-tag">LLM APIs</span>
+      </div>
+      <a href="https://github.com/nehasreereddy2006/qagenie-ai" target="_blank" class="proj-link" title="View on GitHub">↗</a>
+    </div>
+    <div class="project-row reveal">
+      <span class="proj-num">003</span>
+      <div class="proj-info">
+        <div class="proj-name">Saaradhi</div>
+        <div class="proj-desc">Offline-first Android bus booking app with bilingual (English & Telugu) voice navigation. Accessible travel reservations with real-time state management.</div>
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Kotlin</span>
+        <span class="proj-tag">Jetpack Compose</span>
+        <span class="proj-tag">Room DB</span>
+        <span class="proj-tag">MVVM</span>
+      </div>
+      <a href="https://github.com/pranaytheja7-netizen/Saaradhi-" target="_blank" class="proj-link" title="View on GitHub">↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-header reveal">
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-degree">B.Tech — Computer Science & Engineering</div>
+      <div class="edu-school">CVR College of Engineering, Hyderabad · 2024–2028</div>
+      <span class="edu-gpa">⭐ CGPA 8.22 / 10</span>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">High School</div>
+      <div class="edu-school">Sri Ushodaya High School</div>
+      <span class="edu-gpa">⭐ CGPA 9.5 / 10</span>
+    </div>
+  </div>
+</section>
+
+<section id="certs" style="padding:6rem 3rem">
+  <div class="section-header reveal">
+    <h2 class="section-title">Certifications</h2>
+  </div>
+  <div class="certs-grid">
+    <div class="cert-card reveal">
+      <div class="cert-icon">🤖</div>
+      <div class="cert-title">AI Tools Workshop</div>
+      <div class="cert-desc">Hands-on workshop covering AI productivity tools, ChatGPT applications, AI-assisted coding, data analysis, and debugging techniques.</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">💼</div>
+      <div class="cert-title">Deloitte Australia — Technology Job Simulation</div>
+      <div class="cert-desc">Virtual job simulation focused on technology consulting and software development tasks in a professional business environment via Forage.</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="reveal">
+    <h2 class="contact-heading">Let's build<br>something <em>great</em><br>together.</h2>
+    <p style="color:rgba(232,230,224,0.45);font-size:0.9rem;max-width:400px;margin:0 auto;line-height:1.7">Open to internships, collaborations, and interesting projects. Let's connect.</p>
+  </div>
+  <div class="contact-links reveal">
+    <a href="mailto:pranaytheja7@gmail.com" class="contact-link">✉ Email</a>
+    <a href="https://www.linkedin.com/in/pranay-theja-55a523242/" target="_blank" class="contact-link">LinkedIn ↗</a>
+    <a href="https://github.com/Pranay7605" target="_blank" class="contact-link">GitHub ↗</a>
+    <a href="tel:9652511243" class="contact-link">📞 9652511243</a>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">© 2025 Pranay Theja Bandarkanti — Hyderabad, India</span>
+  <span class="footer-text">CS @ CVR College of Engineering</span>
+</footer>
+
+<script>
+const cur = document.getElementById('cur');
+const curRing = document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.transform=`translate(${mx-5}px,${my-5}px)`;
+});
+function animRing(){
+  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+  curRing.style.transform=`translate(${rx-18}px,${ry-18}px)`;
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.project-row,.cert-card,.skill-pill').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    curRing.style.width='50px';curRing.style.height='50px';
+    curRing.style.borderColor='rgba(200,255,0,0.6)';
+  });
+  el.addEventListener('mouseleave',()=>{
+    curRing.style.width='36px';curRing.style.height='36px';
+    curRing.style.borderColor='rgba(200,255,0,0.4)';
+  });
+});
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
